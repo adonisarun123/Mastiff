@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/seo-utils";
 import dynamic from "next/dynamic";
+import GoogleReviews from "@/components/google-reviews";
 
 // Dynamic import for code splitting - reduces initial bundle
 const HomeClient = dynamic(() => import("./home-client"), {
@@ -37,9 +38,11 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/"
 });
 
-// No `revalidate`: the homepage has no CMS data, so it is built once per deploy. The hourly
-// ISR regeneration only re-rendered identical content, and production served a copy rendered
-// as "/index", which broke the homepage-only header styling.
+// Rebuilt once a day so the Google rating and reviews stay current (they are cached for the
+// same period, see google-reviews.ts). Regenerated copies render with the pathname "/index";
+// navigation.tsx treats that as "/" so the homepage header styling still applies.
+export const revalidate = 86400;
+
 export default function HomePage() {
-  return <HomeClient />;
+  return <HomeClient reviews={<GoogleReviews />} />;
 }

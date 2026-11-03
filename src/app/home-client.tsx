@@ -20,7 +20,7 @@ import {
   Shield,
   MapPin
 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { usePopup } from "@/components/popup-provider";
 import { HomepageMediaService } from "@/lib/homepage-media";
 import ProgressiveVideo from "@/components/ui/progressive-video";
@@ -39,7 +39,8 @@ const staggerContainer = {
   }
 };
 
-export default function HomeClient() {
+// `reviews` is the server-rendered Google reviews section (see page.tsx).
+export default function HomeClient({ reviews }: { reviews?: ReactNode }) {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
   const { openPopup } = usePopup();
@@ -595,6 +596,9 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
+      {/* Google Rating & Reviews */}
+      {reviews}
 
       {/* Call to Action */}
       <section className="py-16 lg:py-20 bg-gradient-to-br from-[#2A3959] to-[#1E2A3A] relative overflow-hidden">

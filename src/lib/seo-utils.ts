@@ -33,7 +33,7 @@ export const companyInfo = {
     addressCountry: "IN"
   },
   // Google Business Profile (the same place embedded in the footer map).
-  hasMap: "https://www.google.com/maps?cid=9888755426919568659",
+  hasMap: facts.googleMapsUrl,
   openingHours: "Mo-Sa 09:00-19:00",
   priceRange: "₹₹₹",
   currenciesAccepted: "INR",
