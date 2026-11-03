@@ -39,6 +39,13 @@ export const companyInfo = {
   // Matches the contact page.
   openingHoursText: 'Mon - Sat: 9:00 AM - 7:00 PM',
 
+  // Google Business Profile: the same listing as the footer map. The place ID drives the
+  // homepage reviews (google-reviews.ts) and the "Write a review" link; Google allows
+  // storing place IDs indefinitely.
+  googlePlaceId: 'ChIJqQTniBYXrjsRE9VB_KrqO4k',
+  googleMapsUrl: 'https://www.google.com/maps?cid=9888755426919568659',
+  googleWriteReviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJqQTniBYXrjsRE9VB_KrqO4k',
+
   social: {
     linkedin: 'https://in.linkedin.com/company/white-massif-event-management-co',
     instagram: 'https://www.instagram.com/whitemassif/',
