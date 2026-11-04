@@ -10,7 +10,9 @@ import { companyInfo } from './company-info';
  * free monthly allowance for Place Details (1,000 requests for the reviews tier).
  *
  * Google returns at most 5 reviews, ranked by relevance; there is no way to request more or
- * to change the order.
+ * to change which ones it picks. Reviews in HIDDEN_REVIEW_AUTHOR_IDS are dropped and the rest
+ * shuffled each time the homepage regenerates (about daily). Google requires a notice of how
+ * reviews are filtered and ordered: keep the one in the reviews section in step with this.
  *
  * GOOGLE_PLACES_API_KEY is server-only: never prefix it with NEXT_PUBLIC_. When it is unset
  * this returns null and the reviews section is not rendered.
@@ -19,6 +21,12 @@ import { companyInfo } from './company-info';
 const REVALIDATE_SECONDS = 86400;
 const TIMEOUT_MS = 8000;
 const FIELD_MASK = 'rating,userRatingCount,reviews,googleMapsLinks';
+
+// Reviews kept off the site, by the reviewer's Google Maps contributor ID (from their profile
+// URL), which stays the same if they rename their profile.
+const HIDDEN_REVIEW_AUTHOR_IDS = [
+  '107434482508770204353', // A family birthday party, not a corporate event.
+];
 
 export interface GoogleReview {
   id: string;
@@ -67,16 +75,27 @@ interface PlaceDetailsResponse {
 
 const isBuildPhase = () => process.env.NEXT_PHASE === 'phase-production-build';
 
+function shuffled<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 function toReview(review: PlacesReview): GoogleReview | null {
   const text = review.text?.text?.trim();
   const authorName = review.authorAttribution?.displayName;
+  const authorUrl = review.authorAttribution?.uri;
   // Rating-only reviews have no text; they are left out (the section says so).
   if (!text || !authorName || !review.rating) return null;
+  if (authorUrl && HIDDEN_REVIEW_AUTHOR_IDS.some(id => authorUrl.includes(id))) return null;
 
   return {
     id: review.name || `${authorName}-${review.relativePublishTimeDescription}`,
     authorName,
-    authorUrl: review.authorAttribution?.uri,
+    authorUrl,
     authorPhotoUrl: review.authorAttribution?.photoUri,
     rating: review.rating,
     text,
@@ -124,7 +143,7 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
       rating: place.rating,
       ratingCount: place.userRatingCount,
       reviewsUrl: place.googleMapsLinks?.reviewsUri || companyInfo.googleMapsUrl,
-      reviews: (place.reviews ?? []).map(toReview).filter((review): review is GoogleReview => review !== null),
+      reviews: shuffled((place.reviews ?? []).map(toReview).filter((review): review is GoogleReview => review !== null)),
     };
   } catch (error) {
     console.error('[google-reviews] Failed to load reviews:', error instanceof Error ? error.message : error);

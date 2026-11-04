@@ -3,10 +3,12 @@ import { buttonVariants } from '@/components/ui/button';
 import { companyInfo } from '@/lib/company-info';
 import { getGoogleReviews, type GoogleReview } from '@/lib/google-reviews';
 import { cn } from '@/lib/utils';
+import ReviewsCarousel from '@/components/reviews-carousel';
 
 /*
  * Google rating and reviews. A server component: the data is fetched and cached on the
- * server (see google-reviews.ts), so it adds no request or JavaScript to the page.
+ * server (see google-reviews.ts) and the cards are server-rendered, so visitors make no
+ * request for them. Only the scrolling row (reviews-carousel.tsx) runs in the browser.
  *
  * Google's display rules for Places reviews, all met below: credit each author (name,
  * photo, profile link), link every review to Google Maps, say how reviews are chosen,
@@ -16,11 +18,15 @@ import { cn } from '@/lib/utils';
 
 const STAR_KEYS = [0, 1, 2, 3, 4];
 
-/** Five stars, filled up to `rating`; a fractional rating partly fills the last star. */
+/**
+ * Five stars, filled up to `rating`; a fractional rating partly fills the last star. `w-fit`
+ * keeps the wrapper as wide as the stars: a column flex parent would otherwise stretch it, and
+ * the fill percentage would no longer clip them (a 4-star review showed 5 amber stars).
+ */
 function Stars({ rating, className }: { rating: number; className: string }) {
   const filled = `${(Math.min(Math.max(rating, 0), 5) / 5) * 100}%`;
   return (
-    <span className="relative inline-flex" role="img" aria-label={`${rating} out of 5 stars`}>
+    <span className="relative inline-flex w-fit" role="img" aria-label={`${rating} out of 5 stars`}>
       <span className="flex text-gray-300">
         {STAR_KEYS.map(key => <Star key={key} className={cn(className, 'fill-current')} />)}
       </span>
@@ -46,7 +52,7 @@ function ReviewCard({ review }: { review: GoogleReview }) {
   );
 
   return (
-    <article className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <article className="w-[85%] md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex-shrink-0 snap-start flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
       <header className="flex items-center gap-3 mb-4">
         {review.authorPhotoUrl ? (
           // Loaded straight from Google: its terms do not allow caching it through /_next/image.
@@ -149,14 +155,15 @@ export default async function GoogleReviews() {
         </div>
 
         {data.reviews.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-6">
+          <ReviewsCarousel label="Google reviews">
             {data.reviews.map(review => <ReviewCard key={review.id} review={review} />)}
-          </div>
+          </ReviewsCarousel>
         )}
 
         <div className="mt-10 text-center space-y-2">
           <p className="text-sm text-gray-500">
-            Showing the reviews Google ranks most relevant. Reviews without a written comment are not shown.
+            A selection of the reviews Google ranks most relevant, chosen by White Massif and shown in random
+            order. Reviews without a written comment are not shown.
           </p>
           <p
             translate="no"
