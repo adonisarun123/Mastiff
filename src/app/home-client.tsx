@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,8 +16,7 @@ import {
   Award,
   Sparkles,
   Heart,
-  Shield,
-  MapPin
+  Shield
 } from "lucide-react";
 import { useRef, type ReactNode } from "react";
 import { usePopup } from "@/components/popup-provider";
@@ -166,20 +164,6 @@ export default function HomeClient({ reviews }: { reviews?: ReactNode }) {
           {/* Subtle overlay for depth */}
           <div className="absolute inset-0 bg-black/10 z-10" />
         </div>
-
-        {/* Minimal Top Badge. Offset clears the fixed header (h-16, lg:h-20), which hid it.
-            Centred with auto margins: framer-motion's inline transform overrode -translate-x-1/2. */}
-        <motion.div
-          className="absolute top-24 lg:top-28 inset-x-0 mx-auto w-fit z-20"
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-sm px-4 py-2">
-            <MapPin className="w-4 h-4 mr-2" />
-            Bangalore's Premier Event Management
-          </Badge>
-        </motion.div>
 
         {/* Scroll Indicator. Only where the hero is full-screen (md+); below that the hero is a
             short 16:9 strip, the next section is already in view, and it would hit the badge. */}

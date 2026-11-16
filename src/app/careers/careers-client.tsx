@@ -41,70 +41,6 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
 
-  // Fallback jobs data that matches Job interface
-  const fallbackJobs: Job[] = [
-    {
-      id: 1,
-      title: "Master of Event Alchemy",
-      subtitle: "(Senior Event Manager)",
-      department: "Operations",
-      location: "Bangalore",
-      type: "Full-time Professional",
-      experience: "3-5 years of magic",
-      description: "Transform ambitious client visions into exceptional realities. Lead Fortune 500 events that set new industry standards and create lasting impact.",
-      requirements: ["Proven track record of delivering complex projects", "3+ years creating extraordinary experiences", "Expert in crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"],
-      salary: "₹6-10 LPA + Performance Bonus",
-      impact: "Direct impact on 50+ Fortune 500 events annually",
-      status: "published" as const,
-      sort_order: 1
-    },
-    {
-      id: 2,
-      title: "Visionary Experience Architect",
-      subtitle: "(Creative Designer)",
-      department: "Creative",
-      location: "Bangalore",
-      type: "Full-time Visionary",
-      experience: "2-4 years of brilliance",
-      description: "Design experiences that don&apos;t just look beautiful—they feel extraordinary. Create visual stories that transform spaces into emotional journeys.",
-      requirements: ["Portfolio that makes hearts skip beats", "Master of design tools and creative thinking", "Ability to translate emotions into visuals", "Obsession with perfection and innovation"],
-      salary: "₹4-7 LPA + Creative Incentives",
-      impact: "Your designs will be seen by millions across global events",
-      status: "published" as const,
-      sort_order: 2
-    },
-    {
-      id: 3,
-      title: "Client Experience Specialist",
-      subtitle: "(Client Relations Executive)",
-      department: "Client Relations",
-      location: "Bangalore",
-      type: "Full-time Relationship Builder",
-      experience: "1-3 years of connection",
-      description: "Be the bridge between client visions and exceptional realities. Transform one-time clients into lifelong advocates and strategic partners.",
-      requirements: ["Natural gift for human connection", "Ability to read between the lines of client needs", "Passion for exceeding every expectation", "Fluent in both empathy and excellence"],
-      salary: "₹3-5 LPA + Performance Recognition",
-      impact: "Build relationships that span decades and continents",
-      status: "published" as const,
-      sort_order: 3
-    },
-    {
-      id: 4,
-      title: "Flawless Execution Maestro",
-      subtitle: "(Production Coordinator)",
-      department: "Production",
-      location: "Bangalore",
-      type: "Full-time Orchestrator",
-      experience: "2-4 years of precision",
-      description: "Be the invisible force that makes impossible events look effortless. Coordinate complex productions where every detail matters and every moment counts.",
-      requirements: ["Proven ability to make chaos look like choreography", "Expert in production logistics and vendor symphonies", "Grace under pressure, excellence under deadlines", "Technical knowledge meets creative vision"],
-      salary: "₹4-6 LPA + Excellence Rewards",
-      impact: "Enable flawless execution of 100+ events annually",
-      status: "published" as const,
-      sort_order: 4
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Hero Section */}
@@ -222,6 +158,7 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
             </motion.div>
           </motion.div>
 
+          {jobs.length > 0 ? (
           <motion.div
             initial="initial"
             whileInView="animate"
@@ -229,7 +166,7 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
             variants={staggerContainer}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {(jobs.length > 0 ? jobs : fallbackJobs).map((job, index) => (
+            {jobs.map((job, index) => (
               <motion.div
                 key={job.id || index}
                 variants={fadeInUp}
@@ -238,14 +175,20 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
                 <div className="glass rounded-3xl p-8 h-full flex flex-col hover:shadow-xl transition-all duration-500 micro-bounce">
                   {/* Job Header */}
                   <div className="mb-6">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <Badge className="bg-amber-100 text-amber-700 border-amber-200">
-                        {job.department}
-                      </Badge>
-                      <Badge className="bg-neutral-100 text-neutral-700 border-neutral-200">
-                        {job.type}
-                      </Badge>
-                    </div>
+                    {(job.department || job.type) && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {job.department && (
+                          <Badge className="bg-amber-100 text-amber-700 border-amber-200">
+                            {job.department}
+                          </Badge>
+                        )}
+                        {job.type && (
+                          <Badge className="bg-neutral-100 text-neutral-700 border-neutral-200">
+                            {job.type}
+                          </Badge>
+                        )}
+                      </div>
+                    )}
                     
                     <h3 className="text-xl font-heading text-neutral-900 group-hover:text-amber-600 transition-colors mb-2">
                       {job.title}
@@ -261,19 +204,26 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
                       {job.description}
                     </p>
                     
+                    {/* CMS fields are optional, so skip rows the editor left blank */}
                     <div className="space-y-2 text-sm text-neutral-500 mb-4">
-                      <div className="flex items-center">
-                        <Briefcase className="w-4 h-4 mr-2 flex-shrink-0" />
-                        <span>{job.experience}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                        <span>{job.location}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <TrendingUp className="w-4 h-4 mr-2 flex-shrink-0" />
-                        <span>{job.salary}</span>
-                      </div>
+                      {job.experience && (
+                        <div className="flex items-center">
+                          <Briefcase className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span>{job.experience}</span>
+                        </div>
+                      )}
+                      {job.location && (
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span>{job.location}</span>
+                        </div>
+                      )}
+                      {job.salary && (
+                        <div className="flex items-center">
+                          <TrendingUp className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span>{job.salary}</span>
+                        </div>
+                      )}
                     </div>
                     
                     {job.impact && (
@@ -306,18 +256,41 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* No Jobs State */}
-          {jobs.length === 0 && fallbackJobs.length === 0 && (
+          ) : (
+          /* No openings published in the CMS */
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-16"
+              variants={fadeInUp}
+              className="glass rounded-3xl p-10 md:p-14 max-w-2xl mx-auto text-center"
             >
-              <Users className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-display text-neutral-600 mb-2">No Open Positions</h3>
-              <p className="text-neutral-500 max-w-md mx-auto">We're not actively hiring right now, but exceptional talent is always welcome. Feel free to reach out!</p>
+              <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-amber-100 flex items-center justify-center">
+                <Briefcase className="w-8 h-8 text-amber-600" />
+              </div>
+              <h3 className="text-3xl md:text-4xl font-display text-neutral-900 mb-4">
+                No Open Roles Right Now
+              </h3>
+              <p className="text-neutral-600 font-body leading-relaxed mb-8">
+                We&apos;re not hiring for any specific positions at the moment, but we&apos;re always glad to hear from
+                talented people. Send your CV to{" "}
+                <a href="mailto:work@whitemassif.com" className="text-amber-600 font-medium hover:underline">
+                  work@whitemassif.com
+                </a>{" "}
+                and we&apos;ll get in touch when a role that fits you opens up.
+              </p>
+              <Button
+                onClick={() => window.location.href = ('mailto:work@whitemassif.com?subject=' + encodeURIComponent('General Application') + '&body=' + encodeURIComponent('Dear White Massif Team,\n\nI would love to be considered for future openings at White Massif.\n\nPlease find my CV attached.\n\nBest regards'))}
+                className="btn-primary group"
+              >
+                <Mail className="mr-2 w-5 h-5" />
+                <span>Send Your CV</span>
+              </Button>
             </motion.div>
+          </motion.div>
           )}
         </div>
       </section>
