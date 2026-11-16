@@ -31,8 +31,8 @@ export const metadata: Metadata = generatePageMetadata({
 
 export default async function CareersPage() {
   const jobs = await DirectusService.getJobs();
-  // JobPosting markup (Google for Jobs) only for real CMS openings, never for the
-  // illustrative fallback roles the page shows when the CMS has none.
+  // JobPosting markup (Google for Jobs) for each published CMS opening. With none,
+  // the page shows a "no open roles" message and emits no job markup.
   const jobSchemas = jobs.map((job) =>
     generateJobPostingSchema({
       title: job.title,
