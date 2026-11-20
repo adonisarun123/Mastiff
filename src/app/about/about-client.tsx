@@ -309,7 +309,7 @@ export default function AboutClient() {
               </h2>
               <div className="space-y-6 text-lg text-neutral-600 font-body leading-relaxed">
                 <p>
-                  In 2013, four dreamers sat in a small Bangalore office with an audacious idea: 
+                  In 2013, two dreamers sat in a small Bangalore office with an audacious idea: 
                   What if events could be more than logistics? What if they could be transformative experiences 
                   that change how people feel, think, and connect?
                 </p>
