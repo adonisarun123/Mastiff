@@ -109,7 +109,7 @@ export default function AboutClient() {
     {
       year: "2013",
       title: "The Spark",
-      description: "Four friends. One dream. Zero clients. Infinite ambition. White Massif is born in a tiny Bangalore office.",
+      description: "Two friends. One dream. Zero clients. Infinite ambition. White Massif is born in a tiny Bangalore office.",
       icon: Rocket
     },
     {
