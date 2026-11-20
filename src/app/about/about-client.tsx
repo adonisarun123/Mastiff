@@ -102,22 +102,6 @@ export default function AboutClient() {
       experience: "12+ Years",
       specialization: "Production Management & Financial Planning",
       achievements: ["Operational Efficiency", "Cost Optimization", "Quality Assurance"]
-    },
-    {
-      name: "Hasan Peer H C",
-      position: "Creative Director",
-      expertise: "Creative Vision & Design Leadership",
-      experience: "10+ Years",
-      specialization: "Creative Concepts & Visual Design",
-      achievements: ["Award-Winning Designs", "Creative Innovation", "Brand Excellence"]
-    },
-    {
-      name: "Naveen Abraham A",
-      position: "Head - Operations",
-      expertise: "Execution Mastery & Team Leadership",
-      experience: "8+ Years",
-      specialization: "Event Execution & Team Management",
-      achievements: ["Flawless Execution", "Team Development", "Process Innovation"]
     }
   ];
 
@@ -450,7 +434,7 @@ export default function AboutClient() {
                 The Founders
               </Badge>
               <h2 className="text-4xl md:text-6xl font-display mb-6 text-white leading-tight">
-                Four Minds. <span className="kinetic-text">One Vision.</span>
+                Two Minds. <span className="kinetic-text">One Vision.</span>
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto font-body leading-relaxed">
                 Meet the dreamers who dared to reimagine what events could be. 
