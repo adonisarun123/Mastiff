@@ -17,7 +17,7 @@ export const companyInfo = {
   brandName: 'White Massif',
   foundingYear: FOUNDING_YEAR,
   // Names exactly as on the About page.
-  founders: ['Prakash A Vaswani', 'Vinay Kukreja', 'Hasan Peer H C', 'Naveen Abraham A'],
+  founders: ['Prakash A Vaswani', 'Vinay Kukreja'],
 
   stats: {
     events: '1000+',
