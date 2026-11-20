@@ -61,7 +61,7 @@ Same as homepage, but visitors here are:
 *Why:* Powerful origin story positioning. Obsession = passion + dedication.
 
 **The Story:**
-> "In 2013, four dreamers sat in a small Bangalore office with an audacious idea: What if events could be more than logistics? What if they could be transformative experiences that change how people feel, think, and connect?"
+> "In 2013, two dreamers sat in a small Bangalore office with an audacious idea: What if events could be more than logistics? What if they could be transformative experiences that change how people feel, think, and connect?"
 
 *Why:*
 - Humble beginnings (small office) = relatable
