@@ -127,7 +127,7 @@ Same as homepage, but visitors here are:
 ### Team Section
 
 **Header:**
-> "Four Minds. One Vision."
+> "Two Minds. One Vision."
 
 *Why:* Unity in diversity. Strength in collaboration.
 
@@ -149,7 +149,7 @@ Same as homepage, but visitors here are:
 *Why:* Not just history, but ongoing story
 
 **Milestone Copy Style:**
-- **2013: "The Spark"** - "Four friends. One dream. Zero clients. Infinite ambition."
+- **2013: "The Spark"** - "Two friends. One dream. Zero clients. Infinite ambition."
 - **2016: "The Breakthrough"** - "First Fortune 500 client. First standing ovation."
 - **2019: "The Revolution"** - "Pioneered hybrid events before the world knew it needed them."
 
@@ -206,7 +206,7 @@ Same as homepage, but visitors here are:
 
 ## Tone Adjustments from Homepage
 
-- **More personal** - Use of "four friends," team names
+- **More personal** - Use of "two friends," team names
 - **More philosophical** - Why we exist, what drives us
 - **More narrative** - Timeline tells a story
 - **Still premium** - But with more humanity
